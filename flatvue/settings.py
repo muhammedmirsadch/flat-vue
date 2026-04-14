@@ -82,12 +82,8 @@ WSGI_APPLICATION = 'flatvue.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'flatvue3',
-        'HOST':'localhost',
-        'USER':'root',
-        'PASSWORD':'123456789',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -144,8 +140,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mirsadch7@gmail.com'
-EMAIL_HOST_PASSWORD = ''
-
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
