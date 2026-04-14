@@ -1,0 +1,162 @@
+{% extends 'Service Provider/index.html' %}
+{% load static %}
+{% block body %}
+
+<head>
+    <title>View Service Requests</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #0c0c0c;
+            color: #e8e8e8;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .table-box {
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 0px 16px rgba(0, 255, 200, 0.2);
+        }
+
+        th {
+            background: rgba(0, 255, 200, 0.15);
+            color: #00e1b6;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        td {
+            background: #111;
+            color: #dcdcdc;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(0, 255, 200, 0.08);
+        }
+
+        .btn-accept {
+            background: rgba(0, 200, 83, 0.2);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+            border-radius: 6px;
+            padding: 4px 12px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            margin: 2px;
+        }
+
+        .btn-accept:hover {
+            background: #4caf50;
+            color: #000;
+            box-shadow: 0px 0px 8px rgba(76, 175, 80, 0.5);
+        }
+
+        .btn-reject {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+            border-radius: 6px;
+            padding: 4px 12px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            margin: 2px;
+        }
+
+        .btn-reject:hover {
+            background: #f44336;
+            color: #000;
+            box-shadow: 0px 0px 8px rgba(244, 67, 54, 0.5);
+        }
+
+        .status-pending {
+            color: #ff9800;
+            font-weight: 600;
+        }
+
+        .status-accepted {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .status-rejected {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .reply-text {
+            color: #bb86fc;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br>
+
+    <center>
+        <h2 class="fw-bold text-uppercase"><i class="bi bi-list-check"></i> Service Requests</h2>
+        <p style="opacity: 0.7;">Manage and respond to resident service requests</p>
+    </center>
+
+    <div class="container mt-4">
+        <div class="table-responsive table-box">
+            <table class="table table-bordered table-dark table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{ i.FLAT_OCCUPANT.name }}</td>
+                        <td>{{ i.SERVICE.service }}<br>{{ i.SERVICE.amount }}</td>
+                        <td>{{ i.date }}</td>
+                        <td data-label="Action">
+                            {% if i.status == 'pending' %}
+                                <a href="/myapp/service_provider_approve_servicerequest/{{ i.id }}/"
+                                   class="btn-approve"
+                                   onclick="return confirm('Approve this flat owner?')">
+                                    Approve
+                                </a>
+                                <a href="/myapp/service_provider_reject_servicerequest/{{ i.id }}/"
+                                   class="btn-reject"
+                                   onclick="return confirm('Reject this flat owner?')">
+                                    Reject
+                                </a>
+                            {% else %}
+                                <em>{{ i.status }}</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br><br>
+
+    </div>
+
+</body>
+
+{% endblock %}

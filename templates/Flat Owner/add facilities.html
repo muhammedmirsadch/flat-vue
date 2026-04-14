@@ -1,0 +1,176 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    .facility-container {
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .facility-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .facility-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin-bottom: 10px;
+    }
+
+    .facility-header p {
+        color: #524dd3;
+        font-size: 1.15rem;
+    }
+
+    .facility-card {
+        max-width: 750px;
+        margin: 0 auto;
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .facility-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #524dd3, #524dd3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .facility-card:hover::before {
+        opacity: 1;
+    }
+
+    .facility-card-header {
+        background: #111;
+        padding: 22px 30px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .facility-card-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .facility-card-body {
+        padding: 35px 40px;
+    }
+
+    .form-group {
+        margin-bottom: 26px;
+    }
+
+    .form-label {
+        color: #524dd3;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .form-control {
+        background: #111;
+        border: 2px solid #333;
+        color: #524dd3;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+    }
+
+    .form-control:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+        color: #524dd3;
+        outline: none;
+    }
+
+    .btn-add-facility {
+        background: #524dd3;
+        color: black;
+        padding: 16px 40px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .btn-add-facility:hover {
+        transform: translateY(-3px);
+    }
+
+</style>
+
+<div class="facility-container">
+    <div class="facility-header">
+        <h2>Add Flat Facilities</h2>
+        <p>Register facilities available for residents</p>
+    </div>
+
+    <div class="facility-card">
+        <div class="facility-card-header">
+            <h3><i class="bi bi-tools"></i> Facility Registration</h3>
+        </div>
+
+        <div class="facility-card-body">
+            <form action="/myapp/addfacilities_post/" method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label"><i class="bi bi-tag"></i> Facility Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Gym, Swimming Pool, Parking etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label"><i class="bi bi-calendar-event"></i> Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label"><i class="bi bi-card-text"></i> Details</label>
+                    <input type="text" name="details" class="form-control" placeholder="Facility description or rules" required>
+                </div>
+
+                <button type="submit" class="btn-add-facility">
+                    <i class="bi bi-check2-circle"></i> Add Facility
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,470 @@
+{% extends 'Flat Owner/index.html' %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === Your Original Gorgeous Styles (unchanged) === */
+    .flat-container {
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .flat-header {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #524dd3;
+    }
+
+    .flat-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+    }
+
+    .flat-header p {
+        color: white;
+        font-size: 1.15rem;
+        margin-top: 8px;
+    }
+
+    /* === SEARCH BAR - Perfectly Integrated === */
+    .flat-search-wrapper {
+        max-width: 800px;
+        margin: 0 auto 45px;
+        position: relative;
+    }
+
+    .flat-search-input {
+        width: 100%;
+        padding: 18px 65px 18px 26px;
+        font-size: 1.2rem;
+        background: #1e1e1e;
+        border: 2px solid #333;
+        border-radius: 50px;
+        color: #fff;
+        outline: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s ease;
+        font-weight: 500;
+    }
+
+    .flat-search-input:focus {
+        border-color: #524dd3;
+        transform: scale(1.03);
+        background: #222;
+    }
+
+    .flat-search-input::placeholder {
+        color: #666;
+        font-style: italic;
+        font-weight: normal;
+    }
+
+    .flat-search-icon {
+        position: absolute;
+        right: 22px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #524dd3;
+        font-size: 1.6rem;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .flat-search-clear {
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 1.4rem;
+        cursor: pointer;
+        z-index: 10;
+        display: none;
+        transition: color 0.3s ease;
+    }
+
+    .flat-search-clear:hover {
+        color: #524dd3;
+    }
+
+    /* Results Counter */
+    .flat-results-info {
+        text-align: center;
+        margin: 18px 0 35px;
+        color: #b0bec5;
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+
+    .flat-results-info strong {
+        color: #524dd3;
+        font-weight: 700;
+        font-size: 1.15rem;
+    }
+
+    /* Rest of your original styles */
+    .flat-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 28px;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    .flat-card {
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .flat-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #524dd3, #524dd3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .flat-card:hover::before {
+        opacity: 1;
+    }
+
+    .flat-card:hover {
+        transform: translateY(-14px);
+        border-color: #524dd3;
+    }
+
+    .flat-card-header {
+        background: #111;
+        padding: 18px 22px;
+        border-bottom: 1px solid #2a2a2a;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .flat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #524dd3;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .flat-number::before {
+        content: "";
+        font-size: 1.3rem;
+    }
+
+    .flat-price {
+        background: #524dd3;
+        color: #121212;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 8px rgba(178, 255, 89, 0.3);
+    }
+
+    .flat-card-body {
+        padding: 22px;
+        color: #e0e0e0;
+    }
+
+    .flat-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+        font-size: 0.95rem;
+    }
+
+    .flat-info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flat-info-label {
+        color: #b0bec5;
+        font-weight: 500;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .flat-info-value {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 4px;
+        font-size: 1rem;
+    }
+
+    .flat-card-actions {
+        padding: 18px 22px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #2a2a2a;
+    }
+
+    .flat-btn {
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-size: 0.94rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+        flex: 1;
+        margin: 0 7px;
+    }
+
+    .flat-btn-edit {
+        background: #524dd3;
+        color: white;
+    }
+
+    .flat-btn-edit:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-2px);
+    }
+
+    .flat-btn-delete {
+        background: #ff1a1a;
+        color: white;
+    }
+
+    .flat-btn-delete:hover {
+        color: black;
+        background: #ff1a1a;
+        transform: translateY(-2px);
+    }
+
+    .flat-no-data {
+        text-align: center;
+        padding: 100px 20px;
+        color: #b0bec5;
+        font-size: 1.35rem;
+    }
+
+    .flat-no-data i {
+        font-size: 5rem;
+        color: #b2ff59;
+        margin-bottom: 22px;
+        opacity: 0.25;
+    }
+
+    .flat-add-btn {
+        display: inline-block;
+        margin-top: 50px;
+        padding: 16px 38px;
+        background: #524dd3;
+        color: white;
+        font-weight: 700;
+        font-size: 1.18rem;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .flat-add-btn:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-4px);
+    }
+
+    @media (max-width: 992px) {
+        .flat-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .flat-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .flat-card-actions {
+            flex-direction: column;
+        }
+
+        .flat-btn {
+            margin: 7px 0;
+        }
+
+        .flat-header h2 {
+            font-size: 2.2rem;
+        }
+
+        .flat-search-input {
+            font-size: 1.1rem;
+            padding: 16px 55px 16px 22px;
+        }
+    }
+</style>
+
+<div class="flat-container">
+    <div class="flat-header">
+        <h2>Flats</h2>
+        <p>Organize and track all apartment units efficiently</p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="flat-search-wrapper">
+        <input type="text" id="flatSearchInput" class="flat-search-input"
+               placeholder="Search by flat number, floor, BHK, place, price..." autocomplete="off">
+        <i class="bi bi-search flat-search-icon"></i>
+        <i class="bi bi-x-circle-fill flat-search-clear" id="flatClearSearch"></i>
+    </div>
+
+    <!-- Results Counter -->
+    <div class="flat-results-info">
+        Found <strong id="flatResultsCount">{{ data|length }}</strong> flat{{ data|length|pluralize }}
+    </div>
+
+    <!-- Flats Grid -->
+    {% if data %}
+        <div class="flat-cards" id="flatCardsContainer">
+            {% for i in data %}
+            <div class="flat-card"
+                 data-number="{{ i.flatnumber|lower }}"
+                 data-floor="{{ i.floor|lower }}"
+                 data-rooms="{{ i.rooms|lower }}"
+                 data-place="{{ i.place|lower }}"
+                 data-price="{{ i.price|floatformat:0 }}"
+                 data-area="{{ i.squarefeet|lower }}">
+
+                <div class="flat-card-header">
+                    <div class="flat-number">Flat {{ i.flatnumber }}</div>
+                    <div class="flat-price">₹{{ i.price|floatformat:0 }}</div>
+                </div>
+
+                <div class="flat-card-body">
+                    <div class="flat-info-grid">
+                        <div class="flat-info-item">
+                            <div class="flat-info-label">Floor</div>
+                            <div class="flat-info-value">{{ i.floor|default:"—" }}</div>
+                        </div>
+                        <div class="flat-info-item">
+                            <div class="flat-info-label">Rooms</div>
+                            <div class="flat-info-value">{{ i.rooms|default:"—" }} BHK</div>
+                        </div>
+                        <div class="flat-info-item">
+                            <div class="flat-info-label">Location</div>
+                            <div class="flat-info-value">{{ i.place|default:"—" }}</div>
+                        </div>
+                        <div class="flat-info-item">
+                            <div class="flat-info-label">Area</div>
+                            <div class="flat-info-value">{{ i.squarefeet|default:"—" }} sq.ft</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flat-card-actions">
+                    <a href="/myapp/flat_owner_edit_flat/{{ i.id }}" class="flat-btn flat-btn-edit">
+                        Edit
+                    </a>
+                    <a href="/myapp/flat_owner_delet_flat/{{ i.id }}"
+                       class="flat-btn flat-btn-delete"
+                       onclick="return confirm('Delete Flat {{ i.flatnumber }}? This action cannot be undone.')">
+                        Delete
+                    </a>
+                </div>
+
+
+             <div class="flat-card-actions">
+                    <a href="/myapp/flat_owner_add_broadcast_notification/{{ i.id }}" class="flat-btn flat-btn-edit">
+                        Add
+                    </a>
+                    <a href="/myapp/flat_owner_manage_bd_notif/{{ i.id }}" class="flat-btn flat-btn-edit">
+                        View
+                    </a>
+                </div>
+
+
+
+
+
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="flat-no-data">
+            <div>Building</div>
+            <h3>No Flats Added Yet</h3>
+            <p>Start by adding your first apartment unit to the system.</p>
+        </div>
+    {% endif %}
+
+    <center>
+        <a href="/myapp/flat_owner_add_flat/" class="flat-add-btn">
+            Add New Flat
+        </a>
+    </center>
+</div>
+
+<!-- SEARCH SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('flatSearchInput');
+        const clearBtn = document.getElementById('flatClearSearch');
+        const cards = document.querySelectorAll('.flat-card');
+        const resultsCount = document.getElementById('flatResultsCount');
+
+        function filterFlats() {
+            const term = searchInput.value.toLowerCase().trim();
+            let visible = 0;
+
+            // Toggle clear button
+            clearBtn.style.display = term ? 'block' : 'none';
+
+            cards.forEach(card => {
+                const number = card.dataset.number;
+                const floor = card.dataset.floor || '';
+                const rooms = card.dataset.rooms || '';
+                const place = card.dataset.place || '';
+                const price = card.dataset.price || '';
+                const area = card.dataset.area || '';
+
+                const matches = term === '' ||
+                    number.includes(term) ||
+                    floor.includes(term) ||
+                    rooms.includes(term) ||
+                    place.includes(term) ||
+                    price.includes(term) ||
+                    area.includes(term);
+
+                card.style.display = matches ? '' : 'none';
+                if (matches) visible++;
+            });
+
+            resultsCount.textContent = visible;
+            resultsCount.parentElement.innerHTML =
+                `Found <strong>${visible}</strong> flat${visible !== 1 ? 's' : ''}`;
+        }
+
+        searchInput.addEventListener('input', filterFlats);
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            filterFlats();
+            searchInput.focus();
+        });
+
+        // Auto-focus search on page load
+        searchInput.focus();
+    });
+</script>
+
+{% endblock %}

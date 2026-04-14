@@ -1,0 +1,342 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        color: #e0e0e0;
+    }
+
+    .editservice-container {
+        padding: 50px 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .editservice-card {
+        background: rgba(30, 30, 30, 0.88);
+        backdrop-filter: blur(18px);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(82, 77, 211, 0.25); /* Purple glow border */
+    }
+
+    .editservice-header {
+        background: linear-gradient(135deg, #524dd3 0%, #524dd3 100%);
+        padding: 2.5rem;
+        text-align: center;
+        color: black;
+    }
+
+    .editservice-header h2 {
+        color: black;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin: 0;
+    }
+
+    .editservice-header p {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        opacity: 0.95;
+    }
+
+    .form-body {
+        padding: 50px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #524dd3;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control, .form-select {
+        background: #2a2a2a;
+        border: 2px solid #444;
+        color: #524dd3;
+        border-radius: 14px;
+        padding: 14px 18px;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #524dd3;
+        background: #333;
+        color: #524dd3;
+        transform: translateY(-2px);
+    }
+
+    .input-group-text {
+        background: #333;
+        border: 2px solid #444;
+        color: #524dd3;
+        border-radius: 14px 0 0 14px;
+    }
+
+    /* Current Media Preview */
+    .media-preview {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .media-preview img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 16px;
+        border: 4px solid #444;
+        transition: all 0.4s ease;
+    }
+
+    .media-preview img:hover {
+        transform: scale(1.08);
+        border-color: #524dd3;
+    }
+
+    .no-media {
+        width: 140px;
+        height: 140px;
+        background: #333;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 0.9rem;
+        border: 2px dashed #555;
+    }
+
+    /* Custom File Input */
+    .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .file-input-wrapper input[type=file] {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .file-input-label {
+        display: block;
+        padding: 14px 18px;
+        background: #2a2a2a;
+        border: 2px dashed #555;
+        border-radius: 14px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        color: #524dd3;
+        font-size: 0.95rem;
+    }
+
+    .file-input-label:hover {
+        border-color: #524dd3;
+        background: #333;
+        color: #524dd3;
+        transform: translateY(-2px);
+    }
+
+    .file-input-label i {
+        font-size: 1.8rem;
+        color: #524dd3;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .update-btn {
+        background: linear-gradient(135deg, #524dd3 0%, #524dd3 100%);
+        color: black;
+        border: none;
+        padding: 18px 80px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        transition: all 0.5s ease;
+    }
+
+    .update-btn:hover {
+        color: black;
+        transform: translateY(-7px) scale(1.05);
+        background: linear-gradient(135deg, #524dd3 0%, #524dd3 100%);
+    }
+
+    .back-link {
+        color: #524dd3;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: #524dd3;
+        transform: translateX(-3px);
+    }
+
+    @media (max-width: 768px) {
+        .editservice-container { padding: 30px 15px; }
+        .form-body { padding: 35px 20px; }
+        .editservice-header h2 { font-size: 2rem; }
+        .media-preview img, .no-media { width: 120px; height: 120px; }
+        .update-btn { font-size: 1.1rem; padding: 16px 50px; }
+    }
+</style>
+
+<div class="editservice-container">
+    <div class="editservice-card">
+        <div class="editservice-header">
+            <h2>Edit Service Provider</h2>
+            <p>Update details for {{ data.name }}</p>
+        </div>
+
+        <div class="form-body">
+            <form action="/myapp/editservprovider_post/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row g-4">
+                    <!-- Name -->
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Person</span>
+                            <input type="text" name="name" class="form-control" value="{{ data.name }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Email</span>
+                            <input type="email" name="email" class="form-control" value="{{ data.email }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Phone</span>
+                            <input type="text" name="phone" class="form-control" value="{{ data.phone }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Place -->
+                    <div class="col-md-6">
+                        <label class="form-label">Place / Area</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Location</span>
+                            <input type="text" name="place" class="form-control" value="{{ data.place }}">
+                        </div>
+                    </div>
+
+                    <!-- Service Type -->
+                    <div class="col-md-12">
+                        <label class="form-label">Service Type</label>
+                        <select name="field" class="form-select">
+                            <option value="office staff" {% if data.field == "office staff" %}selected{% endif %}>Office Staff</option>
+                            <option value="newspaper" {% if data.field == "newspaper" %}selected{% endif %}>Newspaper Delivery</option>
+                            <option value="electrician" {% if data.field == "electrician" %}selected{% endif %}>Electrician</option>
+                            <option value="plumber" {% if data.field == "plumber" %}selected{% endif %}>Plumber</option>
+                            <option value="cleaner" {% if data.field == "cleaner" %}selected{% endif %}>Cleaner</option>
+                            <option value="lift operator" {% if data.field == "lift operator" %}selected{% endif %}>Lift Operator</option>
+                            <option value="security" {% if data.field == "security" %}selected{% endif %}>Security Guard</option>
+                            <option value="gardener" {% if data.field == "gardener" %}selected{% endif %}>Gardener</option>
+                        </select>
+                    </div>
+
+                    <!-- Profile Photo -->
+                    <div class="col-md-6">
+                        <label class="form-label">Profile Photo</label>
+                        <div class="media-preview">
+                            {% if data.image %}
+                                <img src="{{ data.image.url }}" alt="Current Photo">
+                            {% else %}
+                                <div class="no-media">No Photo</div>
+                            {% endif %}
+                        </div>
+                        <div class="file-input-wrapper">
+                            <input type="file" name="image" id="imageFile" accept="image/*">
+                            <label for="imageFile" class="file-input-label">
+                                Change Photo<br>
+                                <small>JPG, PNG (Max 2MB)</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- ID Proof -->
+                    <div class="col-md-6">
+                        <label class="form-label">ID Proof</label>
+                        <div class="media-preview">
+                            {% if data.proof %}
+                                <img src="{{ data.proof.url }}" alt="Current Proof" style="object-fit: contain; background:#000;">
+                            {% else %}
+                                <div class="no-media">No Proof</div>
+                            {% endif %}
+                        </div>
+                        <div class="file-input-wrapper">
+                            <input type="file" name="proof" id="proofFile" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="proofFile" class="file-input-label">
+                                Update Proof<br>
+                                <small>PDF, JPG, PNG (Max 5MB)</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn update-btn">
+                        Update Provider
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <a href="/myapp/flat_owner_manage_service_provider/" class="back-link">
+                    Back to Service Providers
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Show selected filename on file input
+    document.querySelectorAll('input[type=file]').forEach(input => {
+        input.addEventListener('change', function() {
+            const label = this.nextElementSibling;
+            if (this.files && this.files[0]) {
+                label.innerHTML = `
+                    Selected: ${this.files[0].name}
+                    <br><small style="color:#7b75ff;">Ready to upload</small>
+                `;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

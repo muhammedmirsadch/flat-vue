@@ -1,0 +1,297 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === Dark Futuristic Theme (Same as Add Occupant) === */
+    .service-container {
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .service-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .service-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin-bottom: 10px;
+    }
+
+    .service-header p {
+        color: #524dd3;
+        font-size: 1.15rem;
+    }
+
+    .service-card {
+        max-width: 950px;
+        margin: 0 auto;
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .service-card:hover::before {
+        opacity: 1;
+    }
+
+    .service-card-header {
+        background: #111;
+        padding: 24px 30px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .service-card-header h3 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .service-card-body {
+        padding: 40px 45px;
+    }
+
+    .form-group {
+        margin-bottom: 26px;
+    }
+
+    .form-label {
+        color: #524dd3;
+        font-weight: 500;
+        font-size: 0.88rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control,
+    .form-select {
+        background: #111;
+        border: 2px solid #333;
+        color: #524dd3;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+        color: #524dd3;
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: #666;
+        font-style: italic;
+    }
+
+    /* Custom File Input Styling */
+    .form-control-file {
+        background: #111;
+        border: 2px solid #333;
+        color: #524dd3;
+        padding: 14px 18px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+        position: relative;
+    }
+
+    .form-control-file:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+    }
+
+    .form-control-file::-webkit-file-upload-button {
+        background: #524dd3;
+        color: #524dd3;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 10px;
+        margin-right: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .form-control-file::-webkit-file-upload-button:hover {
+        background: #3d38a8;
+    }
+
+    .btn-add-service {
+        background: #524dd3;
+        color: black;
+        padding: 16px 40px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        margin-top: 30px;
+        transition: all 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .btn-add-service:hover {
+        background: #524dd3;
+        transform: translateY(-4px);
+    }
+
+    @media (max-width: 768px) {
+        .service-card-body {
+            padding: 30px 20px;
+        }
+        .service-header h2 {
+            font-size: 2.2rem;
+        }
+    }
+</style>
+
+<div class="service-container">
+    <div class="service-header">
+        <h2>Add Service Provider</h2>
+        <p>Register new staff or service personnel for your apartment</p>
+    </div>
+
+    <div class="service-card">
+        <div class="service-card-header">
+            <h3>Service Provider Registration</h3>
+        </div>
+
+        <div class="service-card-body">
+            <form action="/myapp/adddservprovi_post/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row g-4">
+
+                    <!-- Full Name -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter full name" required>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="example@domain.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control" placeholder="+91 98765 43210"
+                                   pattern="[0-9+\-\s]{10,15}" required>
+                        </div>
+                    </div>
+
+                    <!-- Place / Area -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Place / Area</label>
+                            <input type="text" name="place" class="form-control" placeholder="e.g., Kochi" required>
+                        </div>
+                    </div>
+
+                    <!-- Service Type -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Service Type</label>
+                            <select name="field" class="form-select" required>
+                                <option value="" disabled selected>Choose service role</option>
+                                <option value="office staff">Office Staff</option>
+                                <option value="newspaper">Newspaper Delivery</option>
+                                <option value="electrician">Electrician</option>
+                                <option value="plumber">Plumber</option>
+                                <option value="cleaner">Cleaner</option>
+                                <option value="lift operator">Lift Operator</option>
+                                <option value="security">Security Guard</option>
+                                <option value="gardener">Gardener</option>
+                            </select>
+                        </div>
+                    </div>
+
+                     <!-- Profile Photo -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Profile Photo</label>
+                            <input type="file" name="image" class="form-control-file" accept="image/*" required>
+                        </div>
+                    </div>
+
+                     <!-- ID Proof -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">ID Proof</label>
+                            <input type="file" name="proof" class="form-control-file" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Choose login username" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Create strong password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-add-service">
+                    Add Service Provider
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

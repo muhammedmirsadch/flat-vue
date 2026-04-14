@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Index</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="/static/home/assets/img/favicon.png" rel="icon">
+  <link href="/static/home/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/home/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/home/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/home/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/home/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/home/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="/static/home/assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Clarity
+  * Template URL: https://bootstrapmade.com/clarity-bootstrap-agency-template/
+  * Updated: Sep 13 2025 with Bootstrap v5.3.8
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="/static/home/assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Admin</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/myapp/adminhome/" class="active">Home</a></li>
+          <li><a href="/myapp/admin_verify_flat_owner/#services">Flat Owner</a></li>
+          <li><a href="/myapp/admin_view_flat_details/#services">Flat</a></li>
+          <li><a href="/myapp/admin_view_facilities/#services">Facilities</a></li>
+          <li><a href="/myapp/admin_view_app_review/#services">Review</a></li>
+          <li><a href="/myapp/admin_changepassword/#services">Change Password</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="/myapp/logout/">Logout</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+            <div class="hero-content">
+              <h1>Redefining Flat Living with AI-Powered Security and Smart Facility Management</h1>
+              <p>Intelligent automation meets luxury living — AI security, digital services, and streamlined management working together to deliver a smarter, safer, and effortlessly modern residential experience.</p>
+              <div class="hero-buttons">
+  <a href="/myapp/admin_verify_flat_owner/" class="btn btn-primary">Manage Flat Owners</a>
+  <a href="/myapp/admin_view_flat_details/" class="btn btn-outline">View Flats</a>
+</div>
+
+<div class="hero-stats">
+  <div class="stat-item">
+    <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ owner_count }}" data-purecounter-duration="1"></span>
+    <span class="stat-label">Registered Flat Owners</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ facility_count }}" data-purecounter-duration="1"></span>
+    <span class="stat-label">Facilities Available</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ complaint_pending }}" data-purecounter-duration="1"></span>
+    <span class="stat-label">Complaints Pending</span>
+  </div>
+</div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-5 align-items-center">
+
+          <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
+            <div class="content">
+              <h6 class="subtitle">Step Into a New Era of Intelligent Residential Living</h6>
+              <h2>Powering the Future of Residential Living Through Intelligent Automation</h2>
+              <p>
+                Flat Vue is an integrated smart flat management platform designed to simplify apartment administration through intelligent automation. It brings together AI-powered security, digital communication, facility booking, emergency alerts, and transparent billing to deliver a safer, smarter, and more efficient residential living experience.
+              </p>
+
+              <ul class="features-list">
+                <li><i class="bi bi-check-circle-fill"></i><span>Real-time AI security and intelligent visitor management safeguard every residential entry point.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Smart communication tools connect residents and management through a unified digital platform.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Seamless facility booking and automated billing redefine efficiency in apartment living.</span></li>
+              </ul>
+
+              <a href="#" class="btn btn-primary">Discover More</a>
+            </div>
+          </div>
+
+{#          <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">#}
+{#            <div class="image-composition">#}
+{#              <div class="image-main">#}
+{#                <img src="/static/home/assets/img/about/about-9.webp" alt="Modern office with a team working" class="img-fluid" loading="lazy">#}
+{#              </div>#}
+{#              <div class="image-secondary">#}
+{#                <img src="/static/home/assets/img/about/about-square-8.webp" alt="Collaborative discussion" class="img-fluid" loading="lazy">#}
+{#              </div>#}
+{#              <div class="stats-card">#}
+{#                <div class="stats-item">#}
+{#                  <h3>20+</h3>#}
+{#                  <p>Years of Expertise</p>#}
+{#                </div>#}
+{#                <div class="stats-item">#}
+{#                  <h3>500+</h3>#}
+{#                  <p>Happy Clients</p>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+          {%  block body %}
+          {% endblock %}
+
+    </section><!-- /Services Section -->
+  </main>
+
+{#  <footer id="footer" class="footer position-relative dark-background">#}
+{##}
+{#    <div class="container footer-top">#}
+{#      <div class="row gy-4">#}
+{#        <div class="col-lg-4 col-md-6 footer-about">#}
+{#          <a href="index.html" class="logo d-flex align-items-center">#}
+{#            <span class="sitename">Clarity</span>#}
+{#          </a>#}
+{#          <div class="footer-contact pt-3">#}
+{#            <p>A108 Adam Street</p>#}
+{#            <p>New York, NY 535022</p>#}
+{#            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>#}
+{#            <p><strong>Email:</strong> <span>info@example.com</span></p>#}
+{#          </div>#}
+{#          <div class="social-links d-flex mt-4">#}
+{#            <a href=""><i class="bi bi-twitter-x"></i></a>#}
+{#            <a href=""><i class="bi bi-facebook"></i></a>#}
+{#            <a href=""><i class="bi bi-instagram"></i></a>#}
+{#            <a href=""><i class="bi bi-linkedin"></i></a>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="col-lg-2 col-md-3 footer-links">#}
+{#          <h4>Useful Links</h4>#}
+{#          <ul>#}
+{#            <li><a href="#">Home</a></li>#}
+{#            <li><a href="#">About us</a></li>#}
+{#            <li><a href="#">Services</a></li>#}
+{#            <li><a href="#">Terms of service</a></li>#}
+{#            <li><a href="#">Privacy policy</a></li>#}
+{#          </ul>#}
+{#        </div>#}
+{##}
+{#        <div class="col-lg-2 col-md-3 footer-links">#}
+{#          <h4>Our Services</h4>#}
+{#          <ul>#}
+{#            <li><a href="#">Web Design</a></li>#}
+{#            <li><a href="#">Web Development</a></li>#}
+{#            <li><a href="#">Product Management</a></li>#}
+{#            <li><a href="#">Marketing</a></li>#}
+{#            <li><a href="#">Graphic Design</a></li>#}
+{#          </ul>#}
+{#        </div>#}
+{##}
+{#        <div class="col-lg-2 col-md-3 footer-links">#}
+{#          <h4>Hic solutasetp</h4>#}
+{#          <ul>#}
+{#            <li><a href="#">Molestiae accusamus iure</a></li>#}
+{#            <li><a href="#">Excepturi dignissimos</a></li>#}
+{#            <li><a href="#">Suscipit distinctio</a></li>#}
+{#            <li><a href="#">Dilecta</a></li>#}
+{#            <li><a href="#">Sit quas consectetur</a></li>#}
+{#          </ul>#}
+{#        </div>#}
+{##}
+{#        <div class="col-lg-2 col-md-3 footer-links">#}
+{#          <h4>Nobis illum</h4>#}
+{#          <ul>#}
+{#            <li><a href="#">Ipsam</a></li>#}
+{#            <li><a href="#">Laudantium dolorum</a></li>#}
+{#            <li><a href="#">Dinera</a></li>#}
+{#            <li><a href="#">Trodelas</a></li>#}
+{#            <li><a href="#">Flexo</a></li>#}
+{#          </ul>#}
+{#        </div>#}
+{##}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    <div class="container copyright text-center mt-4">#}
+{#      <p>© <span>Copyright</span> <strong class="px-1 sitename">Clarity</strong> <span>All Rights Reserved</span></p>#}
+{#      <div class="credits">#}
+{#        <!-- All the links in the footer should remain intact. -->#}
+{#        <!-- You can delete the links only if you've purchased the pro version. -->#}
+{#        <!-- Licensing information: https://bootstrapmade.com/license/ -->#}
+{#        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->#}
+{#        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#  </footer>#}
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/home/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/home/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/static/home/assets/vendor/aos/aos.js"></script>
+  <script src="/static/home/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/home/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/static/home/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/home/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/home/assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/static/home/assets/js/main.js"></script>
+
+</body>
+
+</html>

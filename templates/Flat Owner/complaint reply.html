@@ -1,0 +1,140 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    .reply-container {
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .reply-card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #1e1e1e;
+        border-radius: 20px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        border: 1px solid #2a2a2a;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .reply-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .reply-card:hover::before {
+        opacity: 1;
+    }
+
+    .reply-card-header {
+        background: #111;
+        padding: 22px 30px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .reply-card-header h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .reply-card-body {
+        padding: 35px 40px;
+    }
+
+    .form-group {
+        margin-bottom: 28px;
+    }
+
+    .form-label {
+        color: #524dd3;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        background: #111;
+        border: 2px solid #333;
+        color: #524dd3;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+    }
+
+    .form-control:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+        outline: none;
+    }
+
+    .btn-send-reply {
+        background: #524dd3;
+        color: black;
+        padding: 16px 40px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-send-reply:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(82, 77, 211, 0.4);
+    }
+</style>
+
+<div class="reply-container">
+    <div class="reply-card">
+        <div class="reply-card-header">
+            <h3><i class="bi bi-reply-fill"></i> Send Reply</h3>
+        </div>
+
+        <div class="reply-card-body">
+            <form action="/myapp/flat_owner_complaint_reply_post/" method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label">Reply Message</label>
+                    <input type="text" name="reply" class="form-control" placeholder="Type your reply here..." required style="color: white">
+                </div>
+
+                <button type="submit" class="btn-send-reply">
+                    <i class="bi bi-send-fill"></i> Send Reply
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

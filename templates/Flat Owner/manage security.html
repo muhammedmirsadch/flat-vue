@@ -1,0 +1,473 @@
+{% extends 'Flat Owner/index.html' %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === Reusing Your Gorgeous Theme === */
+    .security-container {
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .security-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .security-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+    }
+
+    .security-header p {
+        color: white;
+        font-size: 1.15rem;
+        margin-top: 8px;
+    }
+
+    /* === SEARCH BAR === */
+    .security-search-wrapper {
+        max-width: 800px;
+        margin: 0 auto 45px;
+        position: relative;
+    }
+
+    .security-search-input {
+        width: 100%;
+        padding: 18px 65px 18px 26px;
+        font-size: 1.2rem;
+        background: #1e1e1e;
+        border: 2px solid #333;
+        border-radius: 50px;
+        color: #524dd3;
+        outline: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s ease;
+        font-weight: 500;
+    }
+
+    .security-search-input:focus {
+        border-color: #524dd3;
+        transform: scale(1.03);
+        background: #222;
+    }
+
+    .security-search-input::placeholder {
+        color: #666;
+        font-style: italic;
+    }
+
+    .security-search-icon {
+        position: absolute;
+        right: 22px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #524dd3;
+        font-size: 1.6rem;
+        pointer-events: none;
+    }
+
+    .security-search-clear {
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #524dd3;
+        font-size: 1.4rem;
+        cursor: pointer;
+        display: none;
+        transition: color 0.3s ease;
+    }
+
+    .security-search-clear:hover {
+        color: #524dd3;
+    }
+
+    .security-results-info {
+        text-align: center;
+        margin: 18px 0 35px;
+        color: #b0bec5;
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+
+    .security-results-info strong {
+        color: #524dd3;
+        font-weight: 700;
+        font-size: 1.15rem;
+    }
+
+    /* === SECURITY CARDS === */
+    .security-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 28px;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    .security-card {
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .security-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, ##524dd3, ##524dd3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .security-card:hover::before {
+        opacity: 1;
+    }
+
+    .security-card:hover {
+        transform: translateY(-14px);
+        border-color: ##524dd3;
+    }
+
+    .security-card-header {
+        background: #111;
+        padding: 18px 22px;
+        border-bottom: 1px solid #2a2a2a;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .security-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #524dd3;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .security-name i {
+        font-size: 1.3rem;
+    }
+
+    .security-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 2px solid #524dd3;
+    }
+
+    .security-card-body {
+        padding: 22px;
+        color: #524dd3;
+    }
+
+    .security-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+        font-size: 0.95rem;
+    }
+
+    .security-info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .security-info-label {
+        color: #524dd3;
+        font-weight: 500;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .security-info-value {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 4px;
+        font-size: 1rem;
+        word-break: break-word;
+    }
+
+    .security-card-actions {
+        padding: 18px 22px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #2a2a2a;
+        gap: 8px;
+    }
+
+    .security-btn {
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .security-btn-edit {
+        background: #524dd3;
+        color: white;
+    }
+
+    .security-btn-edit:hover {
+        color: black;
+        background: #3d38a8;
+        transform: translateY(-2px);    }
+
+    .security-btn-delete {
+        background: #ff1a1a;
+        color: white;
+    }
+
+    .security-btn-delete:hover {
+        color: black;
+        background: #ff1a1a;
+        transform: translateY(-2px);    }
+
+    .security-btn-assign {
+        background: #00d4ff;
+        color: white;
+    }
+
+    .security-btn-assign:hover {
+        color: black;
+        background: #00d4ff;
+        transform: translateY(-2px);
+    }
+
+    .security-no-data {
+        text-align: center;
+        padding: 100px 20px;
+        color: #b0bec5;
+        font-size: 1.35rem;
+    }
+
+    .security-no-data i {
+        font-size: 5rem;
+        color: #b2ff59;
+        margin-bottom: 22px;
+        opacity: 0.25;
+    }
+
+    .security-add-btn {
+        display: inline-block;
+        margin-top: 50px;
+        padding: 16px 38px;
+        background: #524dd3;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.18rem;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .security-add-btn:hover {
+        background: #3d38a8;
+        color: black;
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 992px) {
+        .security-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .security-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .security-card-actions {
+            flex-direction: column;
+        }
+
+        .security-btn {
+            margin: 4px 0;
+        }
+
+        .security-header h2 {
+            font-size: 2.2rem;
+        }
+
+        .security-search-input {
+            font-size: 1.1rem;
+            padding: 16px 55px 16px 22px;
+        }
+    }
+</style>
+
+<div class="security-container">
+    <div class="security-header">
+        <h2>Security Personnel</h2>
+        <p>Manage and monitor all security staff efficiently</p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="security-search-wrapper">
+        <input type="text" id="securitySearchInput" class="security-search-input"
+               placeholder="Search by name, email, phone, place..." autocomplete="off">
+        <i class="bi bi-search security-search-icon"></i>
+        <i class="bi bi-x-circle-fill security-search-clear" id="securityClearSearch"></i>
+    </div>
+
+    <!-- Results Counter -->
+    <div class="security-results-info">
+        Found <strong id="securityResultsCount">{{ data|length }}</strong> security personnel
+    </div>
+
+    <!-- Security Cards -->
+    {% if data %}
+        <div class="security-cards" id="securityCardsContainer">
+            {% for i in data %}
+            <div class="security-card"
+                 data-name="{{ i.name|lower }}"
+                 data-email="{{ i.email|lower }}"
+                 data-phone="{{ i.phone|lower }}"
+                 data-place="{{ i.place|lower }}">
+
+                <div class="security-card-header">
+                    <div class="security-name">
+                        <i class="bi bi-shield-fill"></i> {{ i.name }}
+                    </div>
+                    {% if i.image %}
+                        <img src="{{ i.image.url }}" alt="{{ i.name }}" class="security-image">
+                    {% else %}
+                        <div class="security-image bg-secondary d-flex align-items-center justify-content-center text-white">
+                            <i class="bi bi-person"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="security-card-body">
+                    <div class="security-info-grid">
+                        <div class="security-info-item">
+                            <div class="security-info-label">E-mail</div>
+                            <div class="security-info-value">{{ i.email|default:"—" }}</div>
+                        </div>
+                        <div class="security-info-item">
+                            <div class="security-info-label">Phone</div>
+                            <div class="security-info-value">{{ i.phone|default:"—" }}</div>
+                        </div>
+                        <div class="security-info-item">
+                            <div class="security-info-label">Location</div>
+                            <div class="security-info-value">{{ i.place|default:"—" }}</div>
+                        </div>
+                        <div class="security-info-item">
+                            <div class="security-info-label">Proof</div>
+                            <div class="security-info-value">
+                                {% if i.proof %}
+                                    <a href="{{ i.proof.url }}" target="_blank" style="color: #524dd3; text-decoration: underline;">
+                                        View Document
+                                    </a>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="security-card-actions">
+                    <a href="/myapp/flat_owner_edit_security/{{ i.id }}" class="security-btn security-btn-edit">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <a href="/myapp/delete_security/{{ i.LOGIN.id }}"
+                       class="security-btn security-btn-delete"
+                       onclick="return confirm('Delete {{ i.name }}? This cannot be undone.')">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                    <a href="/myapp/flat_owner_assign_work/{{ i.id }}" class="security-btn security-btn-assign">
+                        <i class="bi bi-briefcase"></i> Assign
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="security-no-data">
+            <i class="bi bi-shield-lock"></i>
+            <h3>No Security Personnel Added</h3>
+            <p>Add your first security staff member to begin.</p>
+        </div>
+    {% endif %}
+
+    <center>
+        <a href="/myapp/flat_owner_add_security/" class="security-add-btn">
+            Add New Security
+        </a>
+    </center>
+</div>
+
+<!-- SEARCH SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('securitySearchInput');
+        const clearBtn = document.getElementById('securityClearSearch');
+        const cards = document.querySelectorAll('.security-card');
+        const resultsCount = document.getElementById('securityResultsCount');
+
+        function filterSecurity() {
+            const term = searchInput.value.toLowerCase().trim();
+            let visible = 0;
+
+            clearBtn.style.display = term ? 'block' : 'none';
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const email = card.dataset.email;
+                const phone = card.dataset.phone;
+                const place = card.dataset.place;
+
+                const matches = term === '' ||
+                    name.includes(term) ||
+                    email.includes(term) ||
+                    phone.includes(term) ||
+                    place.includes(term);
+
+                card.style.display = matches ? '' : 'none';
+                if (matches) visible++;
+            });
+
+            resultsCount.textContent = visible;
+            resultsCount.parentElement.innerHTML =
+                `Found <strong>${visible}</strong> security personnel`;
+        }
+
+        searchInput.addEventListener('input', filterSecurity);
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            filterSecurity();
+            searchInput.focus();
+        });
+
+        searchInput.focus();
+    });
+</script>
+
+{% endblock %}

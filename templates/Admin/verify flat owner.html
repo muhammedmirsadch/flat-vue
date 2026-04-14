@@ -1,0 +1,275 @@
+{% extends 'Admin/adminindex.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === SAME PREMIUM DARK FUTURISTIC THEME (ADMIN VERSION) === */
+    .admin-approve-container {
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .admin-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .admin-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin-bottom: 10px;
+    }
+
+    .admin-header p {
+        color: #b0bec5;
+        font-size: 1.15rem;
+    }
+
+    .approve-card {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .approve-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .approve-card:hover::before {
+        opacity: 1;
+    }
+
+    .approve-card-header {
+        background: #111;
+        padding: 22px 30px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .approve-card-header h3 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .table {
+        margin-bottom: 0;
+        color: #e0e0e0;
+    }
+
+    .table thead {
+        background: #111;
+        color: #b0bec5;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.8px;
+    }
+
+    .table thead th {
+        border: none;
+        padding: 18px 12px;
+        font-weight: 600;
+    }
+
+    .table tbody td {
+        padding: 22px 12px;
+        vertical-align: middle;
+        border-color: #333;
+        background: #1a1a1a;
+        color: #524dd3;
+    }
+
+    .table tbody tr:hover {
+        background: #222;
+        transition: 0.3s ease;
+    }
+
+    .proof-img, .profile-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 3px solid #333;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .proof-img:hover, .profile-img:hover {
+        transform: scale(1.15);
+        border-color: #524dd3;
+    }
+
+    .status-badge {
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .status-pending   { background: #7c2d12; color: #fed7aa; }
+    .status-approved  { background: #166534; color: #a7f3d0; }
+    .status-rejected  { background: #dc2626; color: #fca5a5; }
+
+    .btn-approve, .btn-reject {
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        display: inline-block;
+        margin: 5px;
+        transition: all 0.3s;
+    }
+
+    .btn-approve {
+        background: #524dd3;
+        color: white;
+    }
+
+    .btn-approve:hover {
+        background: #524dd3;
+        color: black;
+        transform: translateY(-3px);
+    }
+
+    .btn-reject {
+        background: #b91c1c;
+        color: white;
+    }
+
+    .btn-reject:hover {
+        background: #b91c1c;
+        color: black;
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 992px) {
+        .table thead { display: none; }
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
+        .table tr {
+            margin-bottom: 28px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #1e1e1e;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        .table td {
+            text-align: right;
+            padding: 16px 20px;
+            position: relative;
+            padding-left: 50%;
+        }
+        .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 20px;
+            font-weight: 600;
+            color: #b0bec5;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        .proof-img, .profile-img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+</style>
+
+<div class="admin-approve-container">
+    <div class="admin-header">
+        <h2>Flat Owner Details</h2>
+        <p>Review and approve/reject new flat owner registrations</p>
+    </div>
+
+    <div class="approve-card">
+        <div class="approve-card-header">
+            <h3>All Flat Owner Details</h3>
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover align-middle ">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Place</th>
+                        <th>Proof</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td data-label="Name"><strong>{{ i.name }}</strong></td>
+                        <td data-label="Email">{{ i.email }}</td>
+                        <td data-label="Phone">{{ i.phone }}</td>
+                        <td data-label="Place">{{ i.place }}</td>
+                        <td data-label="Proof">
+                            <a href="{{ i.proof.url }}" target="_blank">
+                                <img src="{{ i.proof.url }}" alt="Proof" class="proof-img">
+                            </a>
+                        </td>
+                        <td data-label="Image">
+                            <a href="{{ i.image.url }}" target="_blank">
+                                <img src="{{ i.image.url }}" alt="Profile" class="profile-img">
+                            </a>
+                        </td>
+
+                        <td data-label="Action">
+                            {% if i.Status == 'pending' %}
+                                <a href="/myapp/admin_approve_flat_owner/{{ i.LOGIN.id }}/"
+                                   class="btn-approve"
+                                   onclick="return confirm('Approve this flat owner?')">
+                                    Approve
+                                </a>
+                                <a href="/myapp/admin_reject_flat_owner/{{ i.LOGIN.id }}/"
+                                   class="btn-reject"
+                                   onclick="return confirm('Reject this flat owner?')">
+                                    Reject
+                                </a>
+                            {% else %}
+                                <em>{{ i.Status }}</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            No registration requests at the moment.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

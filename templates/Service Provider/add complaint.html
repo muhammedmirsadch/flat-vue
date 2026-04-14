@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Complaint</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #0c0c0c;
+            color: #e8e8e8;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .form-box {
+            background: linear-gradient(145deg, #101010, #151515);
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 14px;
+            max-width: 550px;
+            margin: auto;
+            padding: 35px 40px;
+            box-shadow: 0 0 18px rgba(0, 255, 200, 0.25);
+        }
+
+        label {
+            font-weight: 600;
+            color: #00e1b6;
+        }
+
+        .form-control {
+            background-color: #0d0d0d;
+            border: 1px solid #007364;
+            color: #e8e8e8;
+        }
+
+        .form-control:focus {
+            background-color: #0d0d0d;
+            border-color: #00e1b6;
+            box-shadow: 0 0 8px rgba(0, 255, 200, 0.7);
+            color: white;
+        }
+
+        .btn-submit {
+            background: #00c2a4;
+            color: white;
+            font-weight: 600;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #00c2a4;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br>
+
+    <center>
+        <h2 class="fw-bold text-uppercase"><i class="bi bi-exclamation-octagon"></i> Add Complaint</h2>
+        <p style="opacity: 0.7;">Submit your complaint here</p>
+    </center>
+
+    <form action="/myapp/addcomplaint_post/" method="post">
+        {% csrf_token %}
+        <div class="form-box mt-4">
+
+
+            <div class="mb-4">
+                <label>Complaint:</label>
+                <input type="text" name="complaint" required class="form-control" placeholder="Enter your complaint">
+            </div>
+
+
+            <button class="btn-submit">Send Complaint</button>
+        </div>
+    </form>
+    <br><br>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    /* === SAME PREMIUM DARK FUTURISTIC THEME === */
+    .activity-container {
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .activity-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .activity-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin-bottom: 10px;
+    }
+
+    .camera-badge {
+        background: #333;
+        color: #7b75ff;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .activity-card {
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        transition: all 0.3s ease;
+        height: 100%;
+        position: relative;
+    }
+
+    .activity-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .activity-card:hover::before {
+        opacity: 1;
+    }
+
+    .activity-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .intruder-img {
+        height: 250px;
+        object-fit: cover;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .no-image-box {
+        height: 250px;
+        background: #111;
+        color: #b0bec5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .card-body h5 {
+        color: #524dd3;
+        font-weight: 700;
+    }
+
+    .card-text {
+        color: #b0bec5;
+        font-size: 0.95rem;
+    }
+
+    .btn-view {
+        background: #524dd3;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-view:hover {
+        background: #3d38a8;
+        transform: translateY(-2px);
+        color: black;
+    }
+
+    .alert-success {
+        background: #1e1e1e;
+        color: #7b75ff;
+        border: 1px solid #2a2a2a;
+        border-radius: 15px;
+    }
+
+    .btn-back {
+        background: #333;
+        color: #7b75ff;
+        padding: 12px 30px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s ease;
+        display: inline-block;
+    }
+
+    .btn-back:hover {
+        background: #524dd3;
+        color: black;
+        transform: translateY(-3px);
+    }
+</style>
+
+<div class="activity-container">
+
+    <div class="activity-header">
+        <h2>🚨 Suspicious Activity Logs</h2>
+        {% if data %}
+        <div class="camera-badge">
+            Camera ID: CAM-{{ data.0.CAMERA.camera_no }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for i in data %}
+            <div class="col">
+                <div class="activity-card">
+
+                    {% if i.image %}
+                        <img src="{{ i.image.url }}" class="intruder-img w-100" alt="Suspicious Activity">
+                    {% else %}
+                        <div class="no-image-box">
+                            No Image Captured
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body p-4">
+                        <h5 class="text-uppercase">Intrusion Detected</h5>
+                        <p class="card-text mt-3">
+                            <strong>Date:</strong> {{ i.date }}<br>
+                            <strong>Location:</strong> {{ i.CAMERA.location }}
+                        </p>
+                    </div>
+
+                    {% if i.image %}
+                    <div class="p-4 pt-0">
+                        <button class="btn-view" onclick="window.open('{{ i.image.url }}')">
+                            View Full Image
+                        </button>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="alert alert-success">
+                    ✅ No suspicious activity recorded for this camera.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="javascript:history.back()" class="btn-back">
+                Go Back
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

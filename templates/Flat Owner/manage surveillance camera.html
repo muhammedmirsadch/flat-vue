@@ -1,0 +1,292 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === SAME PREMIUM DARK FUTURISTIC THEME === */
+    .camera-container {
+        padding: 50px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+    }
+
+    .camera-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .camera-header h2 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin-bottom: 10px;
+    }
+
+    .camera-header p {
+        color: #b0bec5;
+        font-size: 1.15rem;
+    }
+
+    .camera-card {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .camera-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .camera-card:hover::before {
+        opacity: 1;
+    }
+
+    .camera-card-header {
+        background: #111;
+        padding: 22px 30px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .camera-card-header h3 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .table {
+        margin-bottom: 0;
+        color: #e0e0e0;
+    }
+
+    .table thead {
+        background: #111;
+        color: #b0bec5;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.8px;
+    }
+
+    .table thead th {
+        border: none;
+        padding: 18px 12px;
+        font-weight: 600;
+    }
+
+    .table tbody td {
+        padding: 20px 12px;
+        color: #524dd3;
+        vertical-align: middle;
+        border-color: #333;
+        background: #1a1a1a;
+    }
+
+    .table tbody tr:hover {
+        background: #222;
+        transition: 0.3s ease;
+    }
+
+    .camera-no {
+        background: #333;
+        color: #7b75ff;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        min-width: 80px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .location {
+        font-weight: 600;
+        color: #c8c8ff;
+    }
+
+    .details {
+        color: #b0bec5;
+        font-size: 0.95rem;
+        max-width: 380px;
+    }
+
+    .btn-edit {
+        background: #524dd3;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 6px;
+        transition: all 0.3s;
+    }
+
+    .btn-edit:hover {
+        background: #524dd3;
+        color: black;
+        transform: translateY(-2px);
+    }
+
+    .btn-delete {
+        background: #ff1a1a;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+
+    .btn-delete:hover {
+        background: #ff1a1a;
+        color: black;
+        transform: translateY(-2px);
+    }
+
+    .btn-add-new {
+        background: #524dd3;
+        color: white;
+        padding: 16px 40px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-radius: 16px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        margin: 35px auto;
+        display: block;
+        width: fit-content;
+    }
+
+    .btn-add-new:hover {
+        background: #3d38a8;
+        transform: translateY(-4px);
+        color: black;
+    }
+
+    @media (max-width: 768px) {
+        .table thead { display: none; }
+        .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+        }
+        .table tr {
+            margin-bottom: 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #1e1e1e;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        .table td {
+            text-align: right;
+            padding: 14px 20px;
+            position: relative;
+            padding-left: 50%;
+        }
+        .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 20px;
+            font-weight: 600;
+            color: #b0bec5;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .action-buttons {
+            text-align: center !important;
+            padding-left: 20px !important;
+        }
+    }
+</style>
+
+<div class="camera-container">
+    <div class="camera-header">
+        <h2>Surveillance Camera Management</h2>
+        <p>Monitor and manage all CCTV cameras in the premises</p>
+    </div>
+
+    <div class="camera-card">
+        <div class="camera-card-header">
+            <h3>All Cameras</h3>
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Camera No</th>
+                        <th>Location</th>
+                        <th>Details</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td data-label="Camera No">
+                            <span class="camera-no">CAM-{{ i.camera_no }}</span>
+                        </td>
+                        <td data-label="Location" class="location">
+                            {{ i.location }}
+                        </td>
+                        <td data-label="Details" class="details">
+                            {{ i.details|default:"No additional details" }}
+                        </td>
+                        <td data-label="Actions" class="action-buttons">
+                            <a href="/myapp/flat_owner_edit_cam/{{ i.id }}" class="btn-edit">
+                                Edit
+                            </a>
+                            <a href="/myapp/flat_owner_delete_camera/{{ i.id }}" class="btn-delete"
+                               onclick="return confirm('Delete this camera permanently?')">
+                                Delete
+                            </a>
+                            <a href="/myapp/ViewSuspiciosActivity/{{ i.id }}">Suspicious Activity</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                           <font color="#dc143c"> No cameras added yet. Install your first surveillance camera!
+                        </font>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add New Camera Button -->
+        <div class="text-center">
+            <a href="/myapp/flat_owner_add_surveillance_camera/" class="btn-add-new">
+                Add New Camera
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

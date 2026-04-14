@@ -1,0 +1,145 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    .rentadd-container {
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        color: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rentadd-card {
+        max-width: 580px;
+        width: 100%;
+        background: #1e1e1e;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .rentadd-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+    }
+
+    .rentadd-header {
+        background: #111;
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .rentadd-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #524dd3;
+    }
+
+    .rentadd-body {
+        padding: 50px 45px;
+    }
+
+    .form-label {
+        color: #b0bec5;
+        font-weight: 500;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+
+    .form-control, .form-select {
+        background: #111;
+        border: 2px solid #333;
+        color: #fff;
+        padding: 16px 20px;
+        border-radius: 14px;
+        font-size: 1rem;
+        transition: 0.4s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+        box-shadow: 0 0 0 4px rgba(82, 77, 211, 0.3);
+    }
+
+    .btn-add-rent {
+        background: #524dd3;
+        color: white;
+        padding: 18px 40px;
+        font-weight: 700;
+        font-size: 1.3rem;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        margin-top: 35px;
+        transition: 0.4s;
+    }
+
+    .btn-add-rent:hover {
+        background: #3d38a8;
+        transform: translateY(-5px);
+        color: black;
+    }
+</style>
+
+<div class="rentadd-container">
+    <div class="rentadd-card">
+
+        <div class="rentadd-header">
+            <h3>Add Rent Agreement</h3>
+        </div>
+
+        <div class="rentadd-body">
+            <form action="/myapp/addrentorpaym_post/" method="post">
+                {% csrf_token %}
+
+                <!-- Flat Occupant Dropdown -->
+                <div class="mb-4">
+                    <label class="form-label">Flat Occupant</label>
+                    <select name="occupant" class="form-select" required>
+                        <option value="">-- Select Occupant --</option>
+
+                        {% for occ in data %}
+                            <option value="{{ occ.id }}">
+                                {{ occ.name }}
+                            </option>
+                        {% empty %}
+                            <option disabled>No occupants available</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Monthly Rent -->
+                <div class="mb-4">
+                    <label class="form-label">Rent (₹)</label>
+                    <input type="number" name="rent" class="form-control"
+                           placeholder="e.g., 15000" min="1" required style="color: white">
+                </div>
+
+                <!-- Duration -->
+                <div class="mb-4">
+                    <label class="form-label">Agreement Duration (Years)</label>
+                    <input type="number" name="duration" class="form-control"
+                           placeholder="e.g., 1 or 2" min="1" max="10" value="1" required>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn-add-rent">Create Rent</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

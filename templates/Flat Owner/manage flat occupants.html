@@ -1,0 +1,417 @@
+{% extends 'Flat Owner/index.html' %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === Your Original Styles (unchanged) === */
+    .fo-occupant-container {
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .fo-occupant-header {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #524dd3;
+    }
+
+    .fo-occupant-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #524dd3;
+    }
+
+    .fo-occupant-header p {
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    /* Search Bar Styling */
+    .fo-search-container {
+        max-width: 700px;
+        margin: 0 auto 40px;
+        position: relative;
+    }
+
+    .fo-search-input {
+        width: 100%;
+        padding: 14px 50px 14px 20px;
+        font-size: 1.1rem;
+        border: 2px solid #333;
+        border-radius: 50px;
+        background: #1e1e1e;
+        color: #fff;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .fo-search-input:focus {
+        border-color: #524dd3;
+    }
+
+    .fo-search-icon {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #524dd3;
+        font-size: 1.4rem;
+        pointer-events: none;
+    }
+
+    .fo-search-clear {
+        position: absolute;
+        right: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: none;
+    }
+
+    .fo-search-clear:hover {
+        color: #524dd3;
+    }
+/* Results Counter */
+    .sp-results-info {
+        text-align: center;
+        margin: 15px 0 30px;
+        color: #b0bec5;
+        font-size: 1rem;
+    }
+
+    .sp-results-info strong {
+        color: #524dd3;
+        font-weight: 700;
+    }
+
+    /* Rest of your original styles (cards, etc.) */
+    .fo-occupant-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .fo-occupant-card {
+        background: #1e1e1e;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        border: 1px solid #333;
+        position: relative;
+    }
+
+    .fo-occupant-card:hover {
+        transform: translateY(-10px);
+        border-color: #524dd3;
+    }
+
+    .fo-card-image {
+        height: 180px;
+        overflow: hidden;
+        background: #111;
+    }
+
+    .fo-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .fo-occupant-card:hover .fo-card-image img {
+        transform: scale(1.1);
+    }
+
+    .fo-card-body {
+        padding: 20px;
+        color: #e0e0e0;
+    }
+
+    .fo-card-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #524dd3;
+        margin-bottom: 12px;
+    }
+
+    .fo-card-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.95rem;
+    }
+
+    .fo-info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px dashed #333;
+    }
+
+    .fo-info-label {
+        color: #b0bec5;
+        font-weight: 500;
+    }
+
+    .fo-info-value {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .fo-proof-link {
+        display: inline-block;
+        margin-top: 8px;
+        color: #524dd3;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .fo-proof-link:hover {
+        color: #524dd3;
+        text-decoration: underline;
+    }
+
+    .fo-card-actions {
+        padding: 15px 20px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #333;
+    }
+
+    .fo-btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+        flex: 1;
+        margin: 0 5px;
+    }
+
+    .fo-btn-edit {
+        background: #524dd3;
+        color: white;
+    }
+
+    .fo-btn-edit:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-2px);
+    }
+
+    .fo-btn-delete {
+        background: #ff1a1a;
+        color: white;
+    }
+
+    .fo-btn-delete:hover {
+        color: black;
+        background: #ff1a1a;
+        transform: translateY(-2px);
+    }
+
+    .fo-no-data {
+        text-align: center;
+        padding: 80px 20px;
+        color: #b0bec5;
+        font-size: 1.3rem;
+    }
+
+    .fo-no-data i {
+        font-size: 4rem;
+        color: #b2ff59;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .fo-add-btn {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 14px 32px;
+        background: #524dd3;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .fo-add-btn:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+        .fo-occupant-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .fo-card-actions {
+            flex-direction: column;
+        }
+
+        .fo-btn {
+            margin: 5px 0;
+        }
+    }
+</style>
+
+<div class="fo-occupant-container">
+    <div class="fo-occupant-header">
+        <h2>Flat Occupants</h2>
+        <p>Manage all registered occupants with ease</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="fo-search-container">
+        <input type="text" id="searchInput" class="fo-search-input" placeholder="Search by name, flat, email, phone..." autocomplete="off">
+        <i class="bi bi-search fo-search-icon"></i>
+        <i class="bi bi-x-circle-fill fo-search-clear" id="clearSearch"></i>
+    </div>
+
+    <!-- Results Count -->
+    <div class="sp-results-info">
+       Found <strong id="resultsCount">{{ data|length }}</strong> occupant{{ data|length|pluralize }}
+    </div>
+
+    {% if data %}
+        <div class="fo-occupant-cards" id="occupantCards">
+            {% for i in data %}
+            <div class="fo-occupant-card"
+                 data-name="{{ i.name|lower }}"
+                 data-flat="{{ i.FLAT.flatnumber|lower }}"
+                 data-email="{{ i.email|lower }}"
+                 data-phone="{{ i.contact|lower }}">
+                <div class="fo-card-image">
+                    {% if i.photo %}
+                        <img src="/media/{{ i.photo }}" alt="{{ i.name }}">
+                    {% else %}
+                        <div style="height:100%; background:#333; display:flex; align-items:center; justify-content:center; color:#666; font-size:1.2rem;">
+                            No Image
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="fo-card-body">
+                    <div class="fo-card-title">{{ i.name }}</div>
+                    <div class="fo-card-info">
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">Phone</span>
+                            <span class="fo-info-value">{{ i.phone|default:"—" }}</span>
+                        </div>
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">Email</span>
+                            <span class="fo-info-value">{{ i.email|default:"—" }}</span>
+                        </div>
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">Place</span>
+                            <span class="fo-info-value">{{ i.place|default:"—" }}</span>
+                        </div>
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">District</span>
+                            <span class="fo-info-value">{{ i.district|default:"—" }}</span>
+                        </div>
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">Flat No</span>
+                            <span class="fo-info-value">{{ i.FLAT.flatnumber|default:"—" }}</span>
+                        </div>
+                        <div class="fo-info-row">
+                            <span class="fo-info-label">Proof</span>
+                            <span class="fo-info-value">
+                                {% if i.proof %}
+                                    <a href="/media/{{ i.proof }}" class="fo-proof-link" download>
+                                        {{ i.proof.name|slice:":20" }}{% if i.proof.name|length > 20 %}...{% endif %}
+                                    </a>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fo-card-actions">
+                    <a href="/myapp/flat_owner_edit_flat_occupant/{{ i.id }}" class="fo-btn fo-btn-edit">Edit</a>
+                    <a href="/myapp/flat_owner_delet_flat_occupant/{{ i.id }}" class="fo-btn fo-btn-delete"
+                       onclick="return confirm('Are you sure you want to delete {{ i.name }}?')">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="fo-no-data">
+            <div>No Occupants</div>
+            <h3>No Occupants Found</h3>
+            <p>There are currently no flat occupants registered.</p>
+        </div>
+    {% endif %}
+
+    <center>
+        <a href="/myapp/flat_owner_add_flat_occupants/" class="fo-add-btn">
+            Add New Occupant
+        </a>
+    </center>
+</div>
+
+<!-- Search Functionality -->
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearSearch');
+    const cards = document.querySelectorAll('.fo-occupant-card');
+    const resultsCount = document.getElementById('resultsCount');
+
+    searchInput.addEventListener('input', function() {
+        const term = this.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        // Show/hide clear button
+        clearBtn.style.display = term ? 'block' : 'none';
+
+        cards.forEach(card => {
+            const name = card.dataset.name;
+            const flat = card.dataset.flat;
+            const email = card.dataset.email;
+            const phone = card.dataset.phone || '';
+
+            const matches = term === '' ||
+                           name.includes(term) ||
+                           flat.includes(term) ||
+                           email.includes(term) ||
+                           phone.includes(term);
+
+            card.style.display = matches ? '' : 'none';
+            if (matches) visibleCount++;
+        });
+
+        resultsCount.innerHTML = `Found <strong>${visibleCount}</strong> occupant${visibleCount !== 1 ? 's' : ''}`;
+    });
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.focus();
+    });
+
+    // Focus on search when page loads
+    window.addEventListener('load', () => {
+        searchInput.focus();
+    });
+</script>
+
+{% endblock %}
+
+
+

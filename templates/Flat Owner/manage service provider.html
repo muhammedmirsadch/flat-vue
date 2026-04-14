@@ -1,0 +1,475 @@
+{% extends 'Flat Owner/index.html' %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === Your Original Beautiful Styles (unchanged) === */
+    .sp-container {
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .sp-header {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #e0f7fa;
+    }
+
+    .sp-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #524dd3;
+    }
+
+    .sp-header p {
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    /* === SEARCH BAR - Perfectly Matched Design === */
+    .sp-search-wrapper {
+        max-width: 750px;
+        margin: 0 auto 40px;
+        position: relative;
+    }
+
+    .sp-search-input {
+        width: 100%;
+        padding: 16px 60px 16px 24px;
+        font-size: 1.15rem;
+        background: #1e1e1e;
+        border: 2px solid #333;
+        border-radius: 50px;
+        color: #fff;
+        outline: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease;
+    }
+
+    .sp-search-input:focus {
+        border-color: #524dd3;
+        transform: scale(1.02);
+    }
+
+    .sp-search-input::placeholder {
+        color: #666;
+        font-style: italic;
+    }
+
+    .sp-search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #524dd3;
+        font-size: 1.5rem;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .sp-search-clear {
+        position: absolute;
+        right: 55px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 1.3rem;
+        cursor: pointer;
+        z-index: 10;
+        display: none;
+        transition: color 0.3s ease;
+    }
+
+    .sp-search-clear:hover {
+        color: #b2ff59;
+    }
+
+    /* Results Counter */
+    .sp-results-info {
+        text-align: center;
+        margin: 15px 0 30px;
+        color: #b0bec5;
+        font-size: 1rem;
+    }
+
+    .sp-results-info strong {
+        color: #524dd3;
+        font-weight: 700;
+    }
+
+    /* Rest of your original styles */
+    .sp-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 28px;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    .sp-card {
+        background: #1e1e1e;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        transition: all 0.4s ease;
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .sp-card:hover {
+        transform: translateY(-3px);
+        border-color: #524dd3;
+    }
+
+    .sp-card-image {
+        height: 190px;
+        overflow: hidden;
+        background: #111;
+        position: relative;
+    }
+
+    .sp-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .sp-card:hover .sp-card-image img {
+        transform: scale(1.12);
+    }
+
+    .sp-no-image {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #222;
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .sp-card-body {
+        padding: 22px;
+        color: #e0e0e0;
+    }
+
+    .sp-card-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #524dd3;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sp-card-title::before {
+        content: "";
+        font-size: 1.2rem;
+    }
+
+    .sp-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 16px;
+        font-size: 0.94rem;
+    }
+
+    .sp-info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sp-info-label {
+        color: #b0bec5;
+        font-weight: 500;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .sp-info-value {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 4px;
+        word-break: break-word;
+    }
+
+    .sp-proof-section {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px dashed #333;
+    }
+
+    .sp-proof-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #524dd3;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.92rem;
+        padding: 6px 0;
+    }
+
+    .sp-proof-link:hover {
+        text-decoration: underline;
+    }
+
+    .sp-card-actions {
+        padding: 18px 22px;
+        background: #111;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #2a2a2a;
+    }
+
+    .sp-btn {
+        padding: 9px 18px;
+        border-radius: 10px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+        flex: 1;
+        margin: 0 6px;
+    }
+
+    .sp-btn-edit {
+        background: #524dd3;
+        color: #ffffff;
+    }
+
+    .sp-btn-edit:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-2px);
+    }
+
+    .sp-btn-delete {
+        background: #ff1a1a;
+        color: white;
+    }
+
+    .sp-btn-delete:hover {
+        color: black;
+        background: #ff1a1a ;
+        transform: translateY(-2px);
+    }
+
+    .sp-no-data {
+        text-align: center;
+        padding: 90px 20px;
+        color: #b0bec5;
+        font-size: 1.3rem;
+    }
+
+    .sp-no-data i {
+        font-size: 4.5rem;
+        color: #b2ff59;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .sp-add-btn {
+        display: inline-block;
+        margin-top: 45px;
+        padding: 15px 35px;
+        background: #524dd3;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.15rem;
+        border-radius: 14px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .sp-add-btn:hover {
+        color: black;
+        background: #524dd3;
+        transform: translateY(-4px);
+    }
+
+    @media (max-width: 992px) {
+        .sp-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sp-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .sp-card-actions {
+            flex-direction: column;
+        }
+
+        .sp-btn {
+            margin: 6px 0;
+        }
+
+        .sp-search-input {
+            font-size: 1rem;
+            padding: 14px 50px 14px 20px;
+        }
+    }
+</style>
+
+<div class="sp-container">
+    <div class="sp-header">
+        <h2>Service Providers</h2>
+        <p>Trusted professionals for your apartment needs</p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="sp-search-wrapper">
+        <input type="text" id="spSearchInput" class="sp-search-input"
+               placeholder="Search by name, role, phone, email, or place..." autocomplete="off">
+        <i class="bi bi-search sp-search-icon"></i>
+        <i class="bi bi-x-circle-fill sp-search-clear" id="spClearSearch"></i>
+    </div>
+
+    <!-- Results Counter -->
+    <div class="sp-results-info">
+        Found <strong id="spResultsCount">{{ data|length }}</strong> service provider{{ data|length|pluralize }}
+    </div>
+
+    <!-- Cards Grid -->
+    {% if data %}
+        <div class="sp-cards" id="spCardsContainer">
+            {% for i in data %}
+            <div class="sp-card"
+                 data-name="{{ i.name|lower }}"
+                 data-field="{{ i.field|lower }}"
+                 data-phone="{{ i.phone|lower }}"
+                 data-email="{{ i.email|lower }}"
+                 data-place="{{ i.place|lower }}">
+
+                <div class="sp-card-image">
+                    {% if i.image %}
+                        <img src="/media/{{ i.image }}" alt="{{ i.name }}">
+                    {% else %}
+                        <div class="sp-no-image">No Image</div>
+                    {% endif %}
+                </div>
+
+                <div class="sp-card-body">
+                    <div class="sp-card-title">{{ i.name }}</div>
+
+                    <div class="sp-info-grid">
+                        <div class="sp-info-item">
+                            <div class="sp-info-label">Field</div>
+                            <div class="sp-info-value">{{ i.field|capfirst|default:"—" }}</div>
+                        </div>
+                        <div class="sp-info-item">
+                            <div class="sp-info-label">Phone</div>
+                            <div class="sp-info-value">{{ i.phone|default:"—" }}</div>
+                        </div>
+                        <div class="sp-info-item">
+                            <div class="sp-info-label">Email</div>
+                            <div class="sp-info-value">{{ i.email|default:"—" }}</div>
+                        </div>
+                        <div class="sp-info-item">
+                            <div class="sp-info-label">Place</div>
+                            <div class="sp-info-value">{{ i.place|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                    <div class="sp-proof-section">
+                        <div class="sp-info-label">ID Proof</div>
+                        {% if i.proof %}
+                            <a href="/media/{{ i.proof }}" class="sp-proof-link" download>
+                                Download Proof
+                            </a>
+                        {% else %}
+                            <span class="sp-info-value" style="color:#666; font-style:italic;">Not provided</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="sp-card-actions">
+                    <a href="/myapp/flat_owner_edit_service_provider/{{ i.id }}" class="sp-btn sp-btn-edit">
+                        Edit
+                    </a>
+                    <a href="/myapp/flat_owner_delete_service_provi/{{ i.id }}" class="sp-btn sp-btn-delete"
+                       onclick="return confirm('Delete {{ i.name }}? This cannot be undone.')">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="sp-no-data">
+            <div>No Providers</div>
+            <h3>No Service Providers Found</h3>
+            <p>Add your first trusted service professional to get started.</p>
+        </div>
+    {% endif %}
+
+    <center>
+        <a href="/myapp/flat_owner_add_service_provider" class="sp-add-btn">
+            Add New Provider
+        </a>
+    </center>
+</div>
+
+<!-- SEARCH SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('spSearchInput');
+        const clearBtn = document.getElementById('spClearSearch');
+        const cards = document.querySelectorAll('.sp-card');
+        const resultsCount = document.getElementById('spResultsCount');
+
+        function filterCards() {
+            const term = searchInput.value.toLowerCase().trim();
+            let visible = 0;
+
+            // Toggle clear button
+            clearBtn.style.display = term ? 'block' : 'none';
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const field = card.dataset.field;
+                const phone = card.dataset.phone || '';
+                const email = card.dataset.email || '';
+                const place = card.dataset.place || '';
+
+                const matches = term === '' ||
+                    name.includes(term) ||
+                    field.includes(term) ||
+                    phone.includes(term) ||
+                    email.includes(term) ||
+                    place.includes(term);
+
+                card.style.display = matches ? '' : 'none';
+                if (matches) visible++;
+            });
+
+            resultsCount.textContent = visible;
+            resultsCount.parentElement.innerHTML =
+                `Found <strong>${visible}</strong> service provider${visible !== 1 ? 's' : ''}`;
+        }
+
+        searchInput.addEventListener('input', filterCards);
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            filterCards();
+            searchInput.focus();
+        });
+
+        // Focus search on load
+        searchInput.focus();
+    });
+</script>
+
+{% endblock %}

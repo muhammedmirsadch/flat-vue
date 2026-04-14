@@ -1,0 +1,179 @@
+{% extends 'Flat Owner/index.html' %}
+{% load static %}
+{% block body %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    /* === SAME PREMIUM DARK FUTURISTIC THEME === */
+    .cameraadd-container {
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cameraadd-card {
+        max-width: 580px;
+        width: 100%;
+        background: #1e1e1e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        border: 1px solid #2a2a2a;
+        position: relative;
+    }
+
+    .cameraadd-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #524dd3, #7b75ff);
+        opacity: 0.9;
+    }
+
+    .cameraadd-header {
+        background: #111;
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .cameraadd-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #524dd3;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .cameraadd-body {
+        padding: 50px 45px;
+    }
+
+    .form-label {
+        color: #b0bec5;
+        font-weight: 500;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control {
+        background: #111;
+        border: 2px solid #333;
+        color: #fff;
+        padding: 16px 20px;
+        border-radius: 14px;
+        font-size: 1rem;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-control:focus {
+        border-color: #524dd3;
+        background: #1a1a1a;
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(82, 77, 211, 0.3);
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: #666;
+        font-style: italic;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .btn-add-camera {
+        background: #524dd3;
+        color: white;
+        padding: 18px 40px;
+        font-weight: 700;
+        font-size: 1.3rem;
+        border-radius: 16px;
+        border: none;
+        width: 100%;
+        margin-top: 35px;
+        transition: all 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .btn-add-camera:hover {
+        background: #3d38a8;
+        color: black;
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 576px) {
+        .cameraadd-body {
+            padding: 40px 30px;
+        }
+        .cameraadd-header h3 {
+            font-size: 1.7rem;
+        }
+        .btn-add-camera {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<div class="cameraadd-container">
+    <div class="cameraadd-card">
+        <div class="cameraadd-header">
+            <h3>Add Surveillance Camera</h3>
+        </div>
+
+        <div class="cameraadd-body">
+            <form action="/myapp/addsurvcamera_post/" method="post">
+                {% csrf_token %}
+
+                <!-- Camera No -->
+                <div class="mb-4">
+                    <label class="form-label">Camera Number / ID</label>
+                    <input type="text" name="camerano" class="form-control"
+                           placeholder="e.g., CAM-001, GATE-01, LOBBY-02" required>
+                </div>
+
+                <!-- Location -->
+                <div class="mb-4">
+                    <label class="form-label">Installation Location</label>
+                    <input type="text" name="location" class="form-control"
+                           placeholder="e.g., Main Gate, Parking Area, Lift Lobby" required>
+                </div>
+
+                <!-- Details -->
+                <div class="mb-4">
+                    <label class="form-label">Details / Specifications</label>
+                    <textarea name="details" class="form-control"
+                              placeholder="Camera type, resolution, night vision, IP address, etc..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-add-camera">
+                    Add Camera to System
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
